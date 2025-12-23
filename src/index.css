@@ -1,0 +1,145 @@
+:root {
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --bg-dark: #0f172a;
+  --bg-card: #1e293b;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: #334155;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  /* background-color: var(--bg-dark); */
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  background-image: url('/public/chottu_bg.jpg');
+  background-position: center center;
+  background-size: contain;
+}
+
+.container {
+  max-width: 600px; /* Mobile focused max width */
+  margin: 0 auto;
+  padding: 1rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: var(--primary);
+}
+
+/* Grocery List */
+.grocery-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.grocery-item {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 1rem;
+  border-radius: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.grocery-item:active {
+  transform: scale(0.98);
+}
+
+.grocery-info h3 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.1rem;
+}
+
+.grocery-meta {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.grocery-checkbox {
+  width: 1.5rem;
+  height: 1.5rem;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+/* Add Form */
+.add-grocery-form {
+  background-color: var(--bg-card);
+  padding: 1.25rem;
+  border-radius: 1rem 1rem 0 0;
+  border-top: 1px solid var(--border);
+  position: sticky;
+  bottom: 0;
+  margin: 0 -1rem -1rem -1rem; /* Stretch to edges */
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 0.75rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.form-input, .form-select {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.qty-input {
+  flex: 1;
+}
+
+.form-select {
+  flex: 1;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 0.875rem;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Loading/Error states */
+.status-msg {
+  text-align: center;
+  color: var(--text-muted);
+  margin-top: 2rem;
+}
