@@ -8,7 +8,8 @@
     "build": "npx vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "npm install && npm run build && node server/app.js"
+    "backend": "node server/app.js",
+    "start": "pnpm install && pnpm run build && node server/app.js"
   },
   "dependencies": {
     "cors": "^2.8.5",

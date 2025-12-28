@@ -49,6 +49,22 @@ export function useGroceries() {
       throw err;
     }
   };
+  const deleteGrocery = async (id) => {
+    try {
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: 'DELETE',
+      });
 
-  return { groceries, loading, error, addGrocery, refresh: fetchGroceries };
+      if (!response.ok) {
+        throw new Error('Failed to delete grocery');
+      }
+
+      setGroceries((prev) => prev.filter((item) => item._id !== id));
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    }
+  };
+
+  return { groceries, loading, error, addGrocery, deleteGrocery, refresh: fetchGroceries };
 }

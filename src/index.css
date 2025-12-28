@@ -1,115 +1,305 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap');
+
 :root {
-  --primary: #6366f1;
-  --primary-hover: #4f46e5;
-  --bg-dark: #0f172a;
-  --bg-card: #1e293b;
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --border: #334155;
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  /* Google Keep Color Palette */
+  --bg-main: #fafafa;
+  --bg-secondary: #ffffff;
+  --text-primary: #202124;
+  --text-secondary: #5f6368;
+  --text-muted: #80868b;
+  
+  /* Card Colors - Google Keep inspired pastels */
+  --card-yellow: #fff475;
+  --card-red: #f28b82;
+  --card-orange: #fbbc04;
+  --card-green: #ccff90;
+  --card-teal: #a7ffeb;
+  --card-blue: #cbf0f8;
+  --card-purple: #d7aefb;
+  --card-pink: #fdcfe8;
+  --card-brown: #e6c9a8;
+  --card-gray: #e8eaed;
+  
+  /* Accent Colors */
+  --accent-yellow: #fbbc04;
+  --accent-hover: #f9ab00;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+  --shadow-md: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+  --shadow-lg: 0 2px 6px 2px rgba(60, 64, 67, 0.15), 0 8px 24px 4px rgba(60, 64, 67, 0.15);
+  
+  /* Font */
+  --font-sans: 'Google Sans', 'Roboto', system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
   padding: 0;
   font-family: var(--font-sans);
-  /* background-color: var(--bg-dark); */
-  color: var(--text-main);
+  background-color: var(--bg-main);
+  color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
-  background-image: url('/public/chottu_bg.jpg');
-  background-position: center center;
-  background-size: contain;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .container {
-  max-width: 600px; /* Mobile focused max width */
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1.5rem;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  padding-bottom: 100px; /* Space for FAB */
 }
 
+/* Header */
 h1 {
-  font-size: 1.75rem;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  color: var(--primary);
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 0 0 2rem 0;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-/* Grocery List */
+h1::before {
+  content: '🛒';
+  font-size: 2.5rem;
+}
+
+/* Grocery List - Masonry Grid */
 .grocery-list {
-  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Grocery Item Card */
+.grocery-item {
+  background-color: var(--card-yellow);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  margin-bottom: 2rem;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  animation: cardAppear 0.3s ease-out;
 }
 
-.grocery-item {
-  background-color: var(--bg-card);
-  border: 1px solid var(--border);
-  padding: 1rem;
-  border-radius: 0.75rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-.grocery-item:active {
-  transform: scale(0.98);
+.grocery-item:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.grocery-item.color-yellow { background-color: var(--card-yellow); }
+.grocery-item.color-red { background-color: var(--card-red); }
+.grocery-item.color-orange { background-color: var(--card-orange); }
+.grocery-item.color-green { background-color: var(--card-green); }
+.grocery-item.color-teal { background-color: var(--card-teal); }
+.grocery-item.color-blue { background-color: var(--card-blue); }
+.grocery-item.color-purple { background-color: var(--card-purple); }
+.grocery-item.color-pink { background-color: var(--card-pink); }
+.grocery-item.color-brown { background-color: var(--card-brown); }
+.grocery-item.color-gray { background-color: var(--card-gray); }
+
+.grocery-info {
+  flex: 1;
 }
 
 .grocery-info h3 {
-  margin: 0 0 0.25rem 0;
-  font-size: 1.1rem;
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.4;
 }
 
 .grocery-meta {
-  color: var(--text-muted);
-  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.grocery-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .grocery-checkbox {
-  width: 1.5rem;
-  height: 1.5rem;
-  accent-color: var(--primary);
+  width: 1.25rem;
+  height: 1.25rem;
   cursor: pointer;
+  accent-color: var(--text-primary);
+  border-radius: 2px;
 }
 
-/* Add Form */
+.delete-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 1.25rem;
+  opacity: 0.6;
+  transition: opacity 0.2s, transform 0.2s;
+  line-height: 1;
+}
+
+.delete-btn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Floating Action Button (FAB) */
 .add-grocery-form {
-  background-color: var(--bg-card);
-  padding: 1.25rem;
-  border-radius: 1rem 1rem 0 0;
-  border-top: 1px solid var(--border);
-  position: sticky;
-  bottom: 0;
-  margin: 0 -1rem -1rem -1rem; /* Stretch to edges */
-  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 1000;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fab-button {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--accent-yellow);
+  border: none;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--text-primary);
+}
+
+.fab-button:hover {
+  background-color: var(--accent-hover);
+  box-shadow: var(--shadow-lg);
+  transform: scale(1.05);
+}
+
+.fab-button:active {
+  transform: scale(0.95);
+}
+
+.form-expanded {
+  width: 90vw;
+  max-width: 500px;
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-lg);
+  animation: expandForm 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes expandForm {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.form-title {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: var(--text-primary);
 }
 
 .form-group {
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
 }
 
 .form-row {
   display: flex;
   gap: 0.75rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
 }
 
-.form-input, .form-select {
+.form-input,
+.form-select {
   width: 100%;
   padding: 0.75rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--border);
-  background-color: var(--bg-dark);
-  color: var(--text-main);
+  border-radius: 4px;
+  border: 1px solid #dadce0;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
   font-size: 1rem;
-  box-sizing: border-box;
+  font-family: var(--font-sans);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--accent-yellow);
+  box-shadow: 0 0 0 2px rgba(251, 188, 4, 0.2);
+}
+
+.form-input::placeholder {
+  color: var(--text-muted);
 }
 
 .qty-input {
@@ -122,24 +312,75 @@ h1 {
 
 .submit-btn {
   width: 100%;
-  padding: 0.875rem;
-  background-color: var(--primary);
-  color: white;
+  padding: 0.75rem;
+  background-color: var(--accent-yellow);
+  color: var(--text-primary);
   border: none;
-  border-radius: 0.5rem;
-  font-size: 1.1rem;
-  font-weight: 600;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  font-family: var(--font-sans);
+}
+
+.submit-btn:hover {
+  background-color: var(--accent-hover);
+}
+
+.submit-btn:active {
+  transform: scale(0.98);
 }
 
 .submit-btn:disabled {
-  opacity: 0.7;
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
-/* Loading/Error states */
+/* Loading/Error/Empty states */
 .status-msg {
   text-align: center;
-  color: var(--text-muted);
-  margin-top: 2rem;
+  color: var(--text-secondary);
+  margin-top: 3rem;
+  font-size: 1.125rem;
+  padding: 2rem;
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .grocery-list {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.75rem;
+  }
+  
+  h1 {
+    font-size: 1.5rem;
+  }
+  
+  h1::before {
+    font-size: 2rem;
+  }
+  
+  .add-grocery-form {
+    bottom: 1rem;
+    right: 1rem;
+  }
+  
+  .form-expanded {
+    width: calc(100vw - 2rem);
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .grocery-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .container {
+    padding: 1rem;
+  }
 }

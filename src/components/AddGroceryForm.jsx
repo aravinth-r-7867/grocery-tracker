@@ -5,6 +5,7 @@ function AddGroceryForm({ onAdd }) {
   const [quantity, setQuantity] = useState('');
   const [unit, setUnit] = useState('pcs');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,6 +17,7 @@ function AddGroceryForm({ onAdd }) {
       setName('');
       setQuantity('');
       setUnit('pcs');
+      setIsExpanded(false); // Collapse after adding
     } catch (error) {
       console.error("Failed to add grocery", error);
     } finally {
@@ -23,44 +25,84 @@ function AddGroceryForm({ onAdd }) {
     }
   };
 
-  return (
-    <form className="add-grocery-form" onSubmit={handleSubmit}>
-      <div className="form-group">
-        <input
-          type="text"
-          placeholder="Item name (e.g., Milk)"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-          className="form-input"
-        />
-      </div>
-      <div className="form-row">
-        <input
-          type="number"
-          placeholder="Qty"
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
-          required
-          min="1"
-          className="form-input qty-input"
-        />
-        <select
-          value={unit}
-          onChange={(e) => setUnit(e.target.value)}
-          className="form-select"
+  const handleClose = () => {
+    setIsExpanded(false);
+    // Reset form when closing
+    setName('');
+    setQuantity('');
+    setUnit('pcs');
+  };
+
+  if (!isExpanded) {
+    return (
+      <div className="add-grocery-form">
+        <button 
+          className="fab-button" 
+          onClick={() => setIsExpanded(true)}
+          aria-label="Add grocery item"
+          title="Add item"
         >
-          <option value="pcs">pcs</option>
-          <option value="kg">kg</option>
-          <option value="g">g</option>
-          <option value="ltr">ltr</option>
-          <option value="pkt">pkt</option>
-        </select>
+          +
+        </button>
       </div>
-      <button type="submit" className="submit-btn" disabled={isSubmitting}>
-        {isSubmitting ? 'Adding...' : 'Add Item'}
-      </button>
-    </form>
+    );
+  }
+
+  return (
+    <div className="add-grocery-form">
+      <form className="form-expanded" onSubmit={handleSubmit}>
+        <div className="form-header">
+          <h2 className="form-title">Add Grocery Item</h2>
+          <button 
+            type="button" 
+            className="close-btn" 
+            onClick={handleClose}
+            aria-label="Close form"
+          >
+            ✕
+          </button>
+        </div>
+        
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Item name (e.g., Milk)"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            className="form-input"
+            autoFocus
+          />
+        </div>
+        
+        <div className="form-row">
+          <input
+            type="number"
+            placeholder="Qty"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+            required
+            min="1"
+            className="form-input qty-input"
+          />
+          <select
+            value={unit}
+            onChange={(e) => setUnit(e.target.value)}
+            className="form-select"
+          >
+            <option value="pcs">pcs</option>
+            <option value="kg">kg</option>
+            <option value="g">g</option>
+            <option value="ltr">ltr</option>
+            <option value="pkt">pkt</option>
+          </select>
+        </div>
+        
+        <button type="submit" className="submit-btn" disabled={isSubmitting}>
+          {isSubmitting ? 'Adding...' : 'Add Item'}
+        </button>
+      </form>
+    </div>
   );
 }
 
